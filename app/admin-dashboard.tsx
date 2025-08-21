@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Alert, Platform } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { Users, Flag, BarChart3, Settings, LogOut } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
@@ -35,9 +35,9 @@ export default function AdminDashboard() {
       ]);
       return;
     }
-    const unsubscribers: Array<() => void> = [];
+    const unsubscribers: (() => void)[] = [];
     try {
-      const pendingQ = query(collection(db, 'users'), where('verificationStatus', '==', 'pending_verification'));
+      const pendingQ = query(collection(db, 'users'), where('status', '==', 'pending_verification'));
       const usersQ = query(collection(db, 'users'));
       const flagsQ = query(collection(db, 'flags'));
 
